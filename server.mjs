@@ -5,7 +5,7 @@ import { selectWithModel } from './model.mjs';
 import { checkInput } from './public/core.mjs';
 
 const root = new URL('./public/', import.meta.url);
-const files = new Map([['/', ['index.html', 'text/html']], ['/index.html', ['index.html', 'text/html']], ['/app.mjs', ['app.mjs', 'text/javascript']], ['/core.mjs', ['core.mjs', 'text/javascript']], ['/style.css', ['style.css', 'text/css']], ['/example.json', ['example.json', 'application/json']]]);
+const files = new Map([['/', ['index.html', 'text/html']], ['/index.html', ['index.html', 'text/html']], ['/app.mjs', ['app.mjs', 'text/javascript']], ['/core.mjs', ['core.mjs', 'text/javascript']], ['/style.css', ['style.css', 'text/css']], ['/example.json', ['example.json', 'application/json']], ['/assets/woodland.png', ['assets/woodland.png', 'image/png']]]);
 const CSP = "default-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'";
 
 export function createServer({ endpoint = process.env.OUTINGFOLD_OLLAMA || 'http://127.0.0.1:11434', selector = selectWithModel } = {}) {

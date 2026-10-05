@@ -3,7 +3,7 @@ import { SECTIONS, MODEL, PAPER_CSS, checkInput, sourceBlocks, validateSelection
 const $ = id => document.getElementById(id);
 const style = document.createElement('style');
 style.textContent = PAPER_CSS;
-document.head.append(style);
+document.head.insertBefore(style, document.querySelector('link[rel="stylesheet"]'));
 let current = null;
 let picks = [];
 let meta = {};
@@ -11,6 +11,40 @@ let local = false;
 let request = null;
 let revision = 0;
 let disposed = false;
+let stage = 'source';
+
+function setStage(next, focus = true) {
+  if (next === 'review' && !current) return;
+  if (next === 'export' && (!current || exportIssue(current, picks, $('reviewed').checked))) return;
+  stage = next;
+  $('landing').hidden = true;
+  $('workspace').hidden = false;
+  document.body.classList.add('editor-active');
+  $('overview-button').hidden = false;
+  for (const [key, panel] of Object.entries({ source: 'source-panel', review: 'review-section', export: 'export-panel' })) {
+    $(panel).hidden = key !== next;
+    if (key === next) $(`step-${key}`).setAttribute('aria-current', 'step');
+    else $(`step-${key}`).removeAttribute('aria-current');
+  }
+  $('stage-heading').textContent = { source: 'Start with the source.', review: 'Make the guide yours.', export: 'Ready for a little outside.' }[next];
+  if (next === 'export') status('Review confirmed. Save your guide, then open the file before leaving.');
+  if (focus) { $('stage-heading').focus({ preventScroll: true }); window.scrollTo({ top: 0, behavior: 'instant' }); }
+}
+
+function showHome() {
+  $('workspace').hidden = true;
+  $('landing').hidden = false;
+  $('overview-button').hidden = true;
+  $('resume-button').hidden = !current && !$('notes').value;
+  document.body.classList.remove('editor-active');
+  $('home-button').focus({ preventScroll: true }); window.scrollTo({ top: 0, behavior: 'instant' });
+}
+for (const id of ['home-button', 'overview-button']) $(id).addEventListener('click', showHome);
+$('start-button').addEventListener('click', () => setStage('source'));
+$('resume-button').addEventListener('click', () => setStage(current ? stage : 'source'));
+for (const name of ['source', 'review', 'export']) $(`step-${name}`).addEventListener('click', () => setStage(name));
+$('continue-button').addEventListener('click', () => setStage('export'));
+$('back-review-button').addEventListener('click', () => setStage('review'));
 
 const input = () => checkInput({ title: $('place').value, url: $('source-url').value, text: $('notes').value });
 function status(message, error = false) { $('status').textContent = message; $('status').classList.toggle('error', error); }
@@ -30,13 +64,13 @@ function renderPaper() {
 
 function refreshExports() {
   const issue = current ? exportIssue(current, picks, $('reviewed').checked) : 'Select excerpts to begin.';
-  for (const id of ['download-button', 'print-button', 'json-button']) $(id).disabled = Boolean(issue);
+  for (const id of ['download-button', 'print-button', 'json-button', 'continue-button', 'step-export']) $(id).disabled = Boolean(issue);
+  $('step-review').disabled = !current;
   $('export-hint').textContent = issue || 'Ready to save. Your offline page includes the full notes; the printout contains only the selected excerpts.';
 }
 
 function renderReview() {
   $('source-review').replaceChildren();
-  $('review-section').hidden = !current;
   if (!current) return;
   const blocks = sourceBlocks(current.text);
   $('review-count').textContent = `${blocks.length - picks.length} of ${blocks.length} lines left out`;
@@ -85,6 +119,7 @@ function invalidate() {
   $('select-button').disabled = !local;
   $('select-button').textContent = 'Select with local Gemma';
   renderReview(); renderPaper();
+  if (!$('workspace').hidden) setStage('source', false);
   status('Notes changed. Select again or arrange the current excerpts manually.');
 }
 
@@ -100,7 +135,7 @@ $('manual-button').addEventListener('click', async () => {
     current = captured; picks = []; meta = { mode: 'Manual selection', model: 'No model', sourceHash };
     $('reviewed').checked = false;
     renderReview(); renderPaper(); status('Choose excerpts below. No AI selection was run.');
-    $('review-section').scrollIntoView({ behavior: 'instant', block: 'start' });
+    setStage('review');
   } catch (err) { status(err.message, true); }
 });
 
@@ -123,14 +158,16 @@ $('notes-form').addEventListener('submit', async event => {
     picks = validateSelection({ picks: result.picks }, sourceBlocks(captured.text));
     current = captured; meta = result.meta;
     renderReview(); renderPaper();
+    setStage('review');
     status(picks.length ? `Local ${MODEL} selected ${picks.length} excerpts in ${(meta.elapsedMs / 1000).toFixed(1)} seconds. Review every source line below.` : 'Gemma selected no excerpts. Your notes are still here: use the checkboxes below to make a card manually.');
   } catch (err) { if (runRevision === revision) status(err.name === 'AbortError' ? 'Selection cancelled.' : err.message, err.name !== 'AbortError'); }
   finally { if (runRevision === revision) { request = null; $('select-button').disabled = !local; $('select-button').textContent = 'Select with local Gemma'; } }
 });
 
-$('example-button').addEventListener('click', async () => {
+async function loadExample() {
   const runRevision = ++revision; request?.abort(); request = null;
   $('example-button').disabled = true;
+  $('editor-example-button').disabled = true;
   try {
     const response = await fetch('./example.json');
     if (!response.ok) throw new Error('The recorded example could not be loaded. Try again, or arrange your own notes manually.');
@@ -143,10 +180,12 @@ $('example-button').addEventListener('click', async () => {
     current = checked; picks = selection; meta = { ...saved.meta, mode: 'Recorded Gemma example' };
     $('reviewed').checked = false; $('source-count').textContent = `${checked.text.length.toLocaleString('en-US')} / 16,000 characters`;
     renderReview(); renderPaper();
+    setStage('review');
     status(`Recorded example · ${saved.meta.model} ran on ${saved.meta.generatedAt.slice(0, 10)}. No model is running now. Source excerpts are from NPS; this is not a live conditions report.`);
-  } catch (err) { if (runRevision === revision) status(err.message, true); }
-  finally { $('example-button').disabled = false; if (runRevision === revision) { $('select-button').disabled = !local; $('select-button').textContent = 'Select with local Gemma'; } }
-});
+  } catch (err) { if (runRevision === revision) { setStage('source'); status(err.message, true); } }
+  finally { $('example-button').disabled = false; $('editor-example-button').disabled = false; if (runRevision === revision) { $('select-button').disabled = !local; $('select-button').textContent = 'Select with local Gemma'; } }
+}
+for (const id of ['example-button', 'editor-example-button']) $(id).addEventListener('click', loadExample);
 
 function saveFile(content, type, filename) {
   const url = URL.createObjectURL(new Blob([content], { type }));

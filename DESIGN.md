@@ -1,29 +1,25 @@
-# OutingFold
+# OutingFold design
 
-An original project begun on 2026-10-05 UTC for DEV Hacktoberfest Week 1.
+## Purpose and workflow
 
-## Product contract
-A reader pastes park notes they have permission to use, plus a title and optional source URL. A local open-weight model selects whole source blocks by ID and assigns them to Plan the visit, Look and listen, or Care and cautions. The deterministic core rejects IDs outside the source and preserves each selected block verbatim. The review shows every source block, including omitted blocks, and allows selection and category changes. Empty categories mean nothing selected, not nothing relevant. The reader confirms review before exporting. Source text can be wrong or old; source matching does not establish truth, completeness or safe conditions.
+A reader turns source notes into a small field guide. The landing page shows the object and offers a recorded example or the reader's own notes. The editor has three stages: Source, Review and Save. Only the active controls are shown, beside the live guide on desktop. Mobile puts the controls first and provides a link to the guide preview.
 
-The deliverable is a short, four-panel, foldable page plus a self-contained HTML file with the complete source. No accounts, tracking, maps, route advice, location permission, paid service or network during offline reading. Local inference needs an installed Ollama model. The hosted example replays a clearly labeled real saved model response, never pretends to run inference. Private notes stay on the local computer. No arbitrary URL fetcher, and no remotely accessible inference server.
+The review lists every source line, including omitted lines. Readers can include, remove or reclassify excerpts. Changing the source or a selection clears review confirmation. Saving remains disabled until the current selection meets the size limits and review is confirmed. Empty model output opens the same review with nothing selected; it never creates a substitute answer.
 
-## Adopted direction
-A practical field handout on an open desk, with the actual fold as the single expressive feature. The tool is a small static frontend with portable ES modules, a zero-dependency Node server and no build step. This is deliberately a static deliverable, not a dashboard. Four panels represent a physical paper fold, not independent feature cards. No decorative images are needed.
+## Visual decisions
 
-```
-OutingFold                                             How it works
-Turn park notes into a pocket field guide.
-[source form, 34%]       [actual paper preview, 66%]
-place / source / notes  | Plan the visit | Look and listen |
-[Select with Gemma]     | Care & cautions | Field notes    |
-status                 [Review selected + omitted source blocks]
-                       [confirm review] [Save offline] [Print]
-```
+The woodland image establishes the outdoor purpose; the paper overlay shows what the app produces. The image is generated illustration, not a claim about the example location. It stays out of offline and printed exports.
 
-Desktop: max-width 1240px, 32px gutters, 26px gap, source column min 290px, preview fluid. Mobile: one column below 820px; paper panels stack for reading and retain 2x2 only in print. No sticky overlay. Keyboard focus stays visible. Busy, error, recorded and local-run states have distinct copy. The primary action is context-dependent: select, review, then save/print. No automatic output or fabricated success.
+The canvas is #f7faf5, paper #ffffff, ink #183f35, accent #e6f2a8, muted text #637469 and warning text #91412c. Type uses Avenir Next, Avenir, Segoe UI and system sans-serif fallbacks. A large landing headline gives way to smaller task headings and restrained controls. Dashed rules on the four-panel guide are actual fold guides. Print styles use monochrome text without depending on background graphics.
 
-## Tokens and components
-Canvas #f4f4ec; paper #ffffff; ink #203c2e; muted #59665d; rule #bdc8b9; accent #245b3f; warning #813c25. Georgia for paper/title, system sans for controls, system monospace only for source IDs and timestamps. Body 16px/1.5; labels 13px/1.4; page heading 36px/1.1; panel headings 21px/1.15. Solid rectangular buttons with 4px radius, 44px minimum touch height; no badges, pills, ornamental icons, gradients or animation. Paper fold uses dashed print guides with an outer thin rule. Source review is a list, with checkboxes and native category selects. Print is monochrome with no background dependency.
+The layout has breakpoints at 1100, 820, 570 and 360 px. Keyboard focus remains visible. Stage changes focus the heading. Reduced-motion settings disable smooth scrolling and button transitions. Status messages distinguish recorded output, live selection, manual selection and failure. Model setup is available in a disclosure on the Source step.
 
-## Required checks
-Source matching and order; unknown IDs; duplicate/reassigned IDs; malformed JSON; whitespace offsets; HTML injection in text/title/URL; no unsafe href; missing groups; omitted cautions visible; stale-result invalidation; source and card size limits; recorded provenance; API body/origin/host validation; loopback binding; model-unavailable error; keyboard flow; mobile overflow; offline export without network; paper print layout. Model evaluation is bounded and registered before inference. No outdoor field trial is claimed.
+## Technical boundaries
+
+Plain browser modules and a zero-dependency Node server keep the public demo static and the offline file self-contained. Local Gemma returns source IDs and categories; application code copies the original substrings and rejects invalid output. Exact copying does not establish truth, completeness or current conditions. The offline HTML retains the full pasted notes, while the printout has only selected excerpts.
+
+No account, analytics, location access or persistent browser storage is used. Local inference needs an installed Ollama model. The hosted example replays a labeled saved response. There is no arbitrary source-URL fetcher or remotely accessible inference server.
+
+## Validation
+
+Nine software tests cover source copying, selection validation, output limits, offline escaping and local API boundaries. Browser checks cover stage transitions, manual selection, adding omitted excerpts, changing sections, review invalidation, keyboard focus and exports. The 320 px and 390 px layouts have no horizontal overflow. The edited park example fits one A4 page. No outdoor field trial or physical printer test is claimed.

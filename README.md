@@ -4,7 +4,7 @@ Turn park notes into a pocket field guide. Local Gemma chooses whole source exce
 
 [Try the recorded example](https://hyunsikparker.github.io/outingfold/)
 
-![The recorded park example in OutingFold](media/recorded-example.jpg)
+![OutingFold: make room for outside](media/landing.jpg)
 
 The hosted demo replays a saved, real Gemma response. It also lets you arrange your own notes manually. It does not run a hosted model or connect to your local Ollama. For live inference, run the app locally.
 
@@ -22,7 +22,7 @@ npm start
 
 Open `http://127.0.0.1:4318`. There are no npm dependencies to install. Once the model is downloaded, inference uses the local Ollama instance. No API key is required.
 
-Paste source excerpts one per line, preserving qualifications and exceptions. Select with Gemma, review every source line, correct the selection or section, and tick the review confirmation. Save the offline HTML, print the card, or export the complete source record as JSON. Check your print preview; paper size, fonts and unusually long words can affect pagination.
+Paste source excerpts one per line, preserving qualifications and exceptions. Select with Gemma, review every source line, correct the selection or section, and tick the review confirmation. Continue to the Save step to download the offline HTML, print the card, or export the complete source record as JSON. Check your print preview; paper size, fonts and unusually long words can affect pagination.
 
 `OUTINGFOLD_OLLAMA` can select a different loopback HTTP endpoint; it defaults to `http://127.0.0.1:11434`. `PORT` defaults to `4318`. The server binds to `127.0.0.1`.
 
@@ -54,7 +54,7 @@ npm test
 
 The nine software tests cover source copying, selection validation, output limits, offline escaping, omitted-source retention, and local API boundaries using a mock model. They require no inference or network service. `node scripts/evaluate.mjs` runs the separate model evaluation, consumes local compute, and is expected to exit nonzero if any criterion fails. It is not part of `npm test`.
 
-Browser checks covered adding an omitted excerpt, changing sections, review-gated exports, downloading and opening the offline HTML, keyboard focus, a 390 px viewport, and a one-page A4 PDF of the example. There has been no outdoor field trial or physical print test.
+Browser checks covered adding an omitted excerpt, changing sections, review-gated exports, downloading and opening the offline HTML, keyboard focus, 320 px and 390 px viewports, the Source → Review → Save flow, and a one-page A4 PDF of the example. There has been no outdoor field trial or physical print test.
 
 ## Data and security
 
@@ -64,7 +64,7 @@ The server accepts only a loopback Ollama endpoint, checks request host and orig
 
 ## Credits and license
 
-Created during the [Hacktoberfest Open-Source AI Challenge Week 1](https://dev.to/challenges/hacktoberfest-week1-2026-10-05), beginning October 5, 2026. Code and documentation were developed with OpenAI Codex assistance. The running selection feature uses Google's open-weight Gemma through Ollama. No model weights are included.
+Created during the [Hacktoberfest Open-Source AI Challenge Week 1](https://dev.to/challenges/hacktoberfest-week1-2026-10-05), beginning October 5, 2026. Code and documentation were developed with OpenAI Codex assistance. The running selection feature uses Google's open-weight Gemma through Ollama. No model weights are included. The introductory woodland image was generated with GPT Image; it is illustrative and does not depict the example park or a field trial.
 
 Original application code: [MIT](LICENSE). Example excerpts: [National Park Service, Theodore Roosevelt Island — Things To Do](https://www.nps.gov/this/planyourvisit/things2do.htm), retrieved October 5, 2026. The example contains nine selected source excerpts, not the entire NPS page. No claim to original U.S. Government works. See [third-party notices](THIRD_PARTY.md).
 
