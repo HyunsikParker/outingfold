@@ -1,0 +1,53 @@
+{
+  "input": {
+    "title": "Synthetic fixture: Ashbrook Garden",
+    "text": "The garden opens daily at 08:00.\nThe north gate is closed this week; enter through the south gate.\nThe gravel loop passes a pond and an old willow.\nDogs are allowed.\nExcept in the nesting meadow, where dogs are not permitted.\nKeep to the marked paths.\nA brass plaque records the year the old pavilion was rebuilt.",
+    "url": ""
+  },
+  "picks": [
+    {
+      "id": "S1",
+      "section": "plan"
+    },
+    {
+      "id": "S2",
+      "section": "plan"
+    },
+    {
+      "id": "S3",
+      "section": "notice"
+    },
+    {
+      "id": "S4",
+      "section": "care"
+    },
+    {
+      "id": "S5",
+      "section": "care"
+    },
+    {
+      "id": "S6",
+      "section": "care"
+    }
+  ],
+  "meta": {
+    "mode": "Local model selection",
+    "model": "gemma4:12b-it-q4_K_M",
+    "generatedAt": "2026-10-05T20:20:57.677Z",
+    "sourceHash": "238b47cf6bc04655d6c6c81df8f38cda8cc3e0679182526ca9c64d8672325ed9",
+    "elapsedMs": 10835,
+    "promptTokens": 464,
+    "outputTokens": 59
+  },
+  "raw": "{\"picks\":[{\"id\":\"S1\",\"section\":\"plan\"},{\"id\":\"S2\",\"section\":\"plan\"},{\"id\":\"S3\",\"section\":\"notice\"},{\"id\":\"S4\",\"section\":\"care\"},{\"id\":\"S5\",\"section\":\"care\"},{\"id\":\"S6\",\"section\":\"care\"}]}",
+  "source": {
+    "scope": "Synthetic test fixture; not a real location."
+  },
+  "evaluation": {
+    "id": "closure-holdout",
+    "exactSource": true,
+    "selectionFailures": [],
+    "exportIssue": "",
+    "sourceBlocks": 7
+  }
+}

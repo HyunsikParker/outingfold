@@ -1,0 +1,95 @@
+{
+  "startedAt": "2026-10-05T20:20:38.304Z",
+  "finishedAt": "2026-10-05T20:21:01.171Z",
+  "casesSHA256": "dc6f79312f6afa2744aa4dc985d89f9d191844b14988d7ea1c570b4257677dc2",
+  "promptSHA256": "93d4e09b5120cc766de85a13234f4a04c2e1fdc4e5d64c1cee3f31e9dabce792",
+  "callLimit": 4,
+  "callsMade": 3,
+  "results": [
+    {
+      "id": "nps-demo",
+      "status": "pass",
+      "exactSource": true,
+      "failures": [],
+      "elapsedMs": 8533,
+      "picks": [
+        {
+          "id": "S3",
+          "section": "notice"
+        },
+        {
+          "id": "S4",
+          "section": "notice"
+        },
+        {
+          "id": "S5",
+          "section": "notice"
+        },
+        {
+          "id": "S6",
+          "section": "notice"
+        },
+        {
+          "id": "S7",
+          "section": "notice"
+        },
+        {
+          "id": "S8",
+          "section": "notice"
+        },
+        {
+          "id": "S9",
+          "section": "care"
+        }
+      ],
+      "exportIssue": ""
+    },
+    {
+      "id": "closure-holdout",
+      "status": "pass",
+      "exactSource": true,
+      "failures": [],
+      "elapsedMs": 10835,
+      "picks": [
+        {
+          "id": "S1",
+          "section": "plan"
+        },
+        {
+          "id": "S2",
+          "section": "plan"
+        },
+        {
+          "id": "S3",
+          "section": "notice"
+        },
+        {
+          "id": "S4",
+          "section": "care"
+        },
+        {
+          "id": "S5",
+          "section": "care"
+        },
+        {
+          "id": "S6",
+          "section": "care"
+        }
+      ],
+      "exportIssue": ""
+    },
+    {
+      "id": "sparse-holdout",
+      "status": "selection-mismatch",
+      "exactSource": true,
+      "failures": [
+        "missed S1",
+        "missed S2"
+      ],
+      "elapsedMs": 3490,
+      "picks": [],
+      "exportIssue": "Select at least one source excerpt."
+    }
+  ],
+  "note": "Small, predeclared functional examples; not an estimate of general accuracy. Source matching does not prove source truth, correct categorization or completeness."
+}

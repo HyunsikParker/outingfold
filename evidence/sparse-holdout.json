@@ -1,0 +1,31 @@
+{
+  "input": {
+    "title": "Synthetic fixture: courtyard notes",
+    "text": "A pair of carved owls sits above the old archway.\nThe wall casts a long shadow over the paving stones.\nA 1974 newsletter mentions a summer concert.",
+    "url": ""
+  },
+  "picks": [],
+  "meta": {
+    "mode": "Local model selection",
+    "model": "gemma4:12b-it-q4_K_M",
+    "generatedAt": "2026-10-05T20:21:01.168Z",
+    "sourceHash": "7fc0f62681e3096a6d6e28c130776bc4d571b318d2eae603e335cafd8d0197f2",
+    "elapsedMs": 3490,
+    "promptTokens": 383,
+    "outputTokens": 6
+  },
+  "raw": "{\"picks\": []}",
+  "source": {
+    "scope": "Synthetic test fixture; not a real location."
+  },
+  "evaluation": {
+    "id": "sparse-holdout",
+    "exactSource": true,
+    "selectionFailures": [
+      "missed S1",
+      "missed S2"
+    ],
+    "exportIssue": "Select at least one source excerpt.",
+    "sourceBlocks": 3
+  }
+}

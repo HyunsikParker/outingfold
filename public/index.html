@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Make a pocket field guide from park notes. Local Gemma selects source excerpts; you review them, then save an offline page or print a foldable card.">
+  <title>OutingFold · Park notes, ready to take outside</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#notes-form">Skip to the notes</a>
+  <header class="site-header"><a class="brand" href="./">OutingFold</a><a href="#how-it-works">How it works</a></header>
+  <main>
+    <div class="intro"><h1>Turn park notes into<br>a pocket field guide.</h1><p>Choose the useful lines. Check what was left out.<br>Take a folded page, and leave the tab behind.</p></div>
+    <div class="workspace">
+      <section class="source-column" aria-labelledby="source-heading">
+        <h2 id="source-heading"><span>01</span> Start with the source</h2>
+        <p class="help">Paste notes you have permission to use. Keep each excerpt on its own line, with its qualifications intact.</p>
+        <button id="example-button" class="secondary wide" type="button">Try the recorded park example</button>
+        <p id="example-caption" class="caption">A saved Gemma response. You can review, change and export it.</p>
+        <form id="notes-form">
+          <label for="place">Place</label><input id="place" maxlength="100" required placeholder="Where are you going?" autocomplete="off">
+          <label for="source-url">Source link <span class="optional">optional</span></label><input id="source-url" type="url" maxlength="1500" placeholder="https://…" autocomplete="off">
+          <label for="notes">Source notes</label><textarea id="notes" rows="12" maxlength="16000" required placeholder="Opening hours, features, access, rules…&#10;One source excerpt per line."></textarea>
+          <p class="caption" id="source-count">No notes added</p>
+          <button class="primary wide" id="select-button" type="submit" disabled>Select with local Gemma</button>
+          <button class="text-button wide" id="manual-button" type="button">Arrange excerpts manually</button>
+        </form>
+        <p class="mode-note" id="connection-note">Checking whether local inference is available…</p>
+        <details class="setup"><summary>Run with your own notes</summary><p>Install <a href="https://ollama.com/" rel="noreferrer">Ollama</a> and Node.js 22 or later. From the source repository:</p><pre><code>ollama pull gemma4:12b-it-q4_K_M
+npm start</code></pre><p>Open <code>http://127.0.0.1:4318</code>. Once the model is installed, inference runs locally. The model download is about 8 GB; available memory and speed depend on your computer.</p><p>The public demo replays a saved response. It does not send your notes to a model or connect to your local Ollama.</p></details>
+      </section>
+      <section class="output-column" aria-labelledby="preview-heading">
+        <div class="section-row"><h2 id="preview-heading"><span>02</span> Your folded page</h2><span id="card-count" class="caption">Nothing selected yet</span></div>
+        <div id="status" class="status" role="status" aria-live="polite">Load the example or add notes to begin.</div>
+        <article class="paper" id="paper" aria-label="Pocket field guide preview"></article>
+        <p class="fold-help">One sheet. Fold along the dashed lines. The offline file also keeps the complete source notes.</p>
+        <section class="review-section" id="review-section" hidden aria-labelledby="review-heading">
+          <div class="section-row"><h2 id="review-heading"><span>03</span> Check the whole source</h2><span id="review-count" class="caption"></span></div>
+          <p class="help">A matching quote can still leave something important out. Review every line, including unchecked ones. Change a section or add a missed excerpt.</p>
+          <div id="source-review" class="source-review"></div>
+          <label class="review-confirm"><input type="checkbox" id="reviewed"><span>I checked the selected lines and the lines left out, including any qualifications, rules and cautions.</span></label>
+          <p id="export-hint" class="help"></p>
+          <div class="export-actions"><button type="button" id="download-button" class="primary" disabled>Save offline page</button><button type="button" id="print-button" class="secondary" disabled>Print folded page</button><button type="button" id="json-button" class="text-button" disabled>Save source record</button></div>
+          <p class="caption">The card repeats your source. It does not check current conditions or plan a route. Recheck hours, closures, weather and access before leaving.</p>
+        </section>
+      </section>
+    </div>
+    <section class="explanation" id="how-it-works"><h2>A small job for a local model.</h2><div><p>Gemma reads the notes and chooses source IDs for three sections. OutingFold checks those IDs and copies the original words. The model cannot add a new sentence to your card.</p><p>You can see and change the selection before saving. The offline HTML includes every source line, even those left off the folded page. The paper has room for something you notice yourself.</p><p>No accounts, analytics scripts or location requests. The app keeps notes in memory; download them to keep a copy. Local mode sends them only to the local Node server and your local Ollama instance.</p><a id="source-code" href="https://github.com/HyunsikParker/outingfold" rel="noreferrer">Source and setup instructions</a></div></section>
+  </main>
+  <footer><span>OutingFold · A field guide made from your sources.</span><span>Built with AI assistance. Made for reading offline.</span></footer>
+</body>
+</html>
