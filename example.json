@@ -1,0 +1,61 @@
+{
+  "input": {
+    "title": "Theodore Roosevelt Island",
+    "text": "As president, Theodore Roosevelt was notorious for dragging diplomats and government officials on tough hikes through the area's \"wild\" lands.\nRanger-led programs are a great way to get the inside story on Theodore Roosevelt Island, whether you are a local who visits every day or a tourist in town for a few hours. Check the calendar to find out when and where to meet for programs.\nBirders will find habitat for wading birds, raptors, and warblers.\nWildflowers put on a spectacular show in spring and early summer.\nA variety of trails lend themselves to different activities.\nThe Swamp Trail is mostly flat with a boardwalk section.\nThe Woods and Upland Trails are surfaced with pea-sized gravel.\nAn easy flat water paddle around the island is the best way to see how it is shaped by the Potomac River.\nIf you bring your own craft, you can put it in the water near the footbridge that leads to the island or near the culvert between the two parking lots. If you rent your craft in Georgetown, be prepared to paddle across the wide, busy river.",
+    "url": "https://www.nps.gov/this/planyourvisit/things2do.htm"
+  },
+  "picks": [
+    {
+      "id": "S3",
+      "section": "notice"
+    },
+    {
+      "id": "S4",
+      "section": "notice"
+    },
+    {
+      "id": "S5",
+      "section": "notice"
+    },
+    {
+      "id": "S6",
+      "section": "notice"
+    },
+    {
+      "id": "S7",
+      "section": "notice"
+    },
+    {
+      "id": "S8",
+      "section": "notice"
+    },
+    {
+      "id": "S9",
+      "section": "care"
+    }
+  ],
+  "meta": {
+    "mode": "Local model selection",
+    "model": "gemma4:12b-it-q4_K_M",
+    "generatedAt": "2026-10-05T20:20:46.839Z",
+    "sourceHash": "e9078df71a801e059a4faf2841a04138ea1f4c45831b32fa78d162b1309a6d73",
+    "elapsedMs": 8533,
+    "promptTokens": 631,
+    "outputTokens": 68
+  },
+  "raw": "{\"picks\":[{\"id\":\"S3\",\"section\":\"notice\"},{\"id\":\"S4\",\"section\":\"notice\"},{\"id\":\"S5\",\"section\":\"notice\"},{\"id\":\"S6\",\"section\":\"notice\"},{\"id\":\"S7\",\"section\":\"notice\"},{\"id\":\"S8\",\"section\":\"notice\"},{\"id\":\"S9\",\"section\":\"care\"}]}",
+  "source": {
+    "publisher": "U.S. National Park Service",
+    "url": "https://www.nps.gov/this/planyourvisit/things2do.htm",
+    "retrievedAt": "2026-10-05T20:18:31.369037+00:00",
+    "scope": "Verbatim text excerpts from the Things To Do page, not the entire page and not live conditions. Line breaks added between excerpts. No claim to original U.S. Government works.",
+    "license": "NPS government text generally public domain; no logos or third-party images included. https://www.nps.gov/aboutus/disclaimer.htm"
+  },
+  "evaluation": {
+    "id": "nps-demo",
+    "exactSource": true,
+    "selectionFailures": [],
+    "exportIssue": "",
+    "sourceBlocks": 9
+  }
+}
